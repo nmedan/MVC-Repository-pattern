@@ -1,0 +1,106 @@
+﻿@model Banka.Models.Racun
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista računa</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <td><b>Broj racuna</b></td>
+        <td><b>Nosilac racuna</b></td>
+        <td><b>Aktivan</b></td>
+        <td><b>Online</b></td>
+
+    </tr>
+
+    @foreach (var item in ViewBag.Racuni as IEnumerable<Banka.Models.Racun>)
+    {
+
+        if (item.Aktivan)
+        {
+            <tr style="background:lightgreen">
+                <td>@item.BrojRacuna</td>
+                <td>@item.NosilacRacuna</td>
+                <td><span>Da</span></td>
+                <td>
+                    @if (@item.Online)
+                {
+                    <span>Da</span>
+                }
+                else
+                {
+                    <span>Ne</span>
+                }
+            </td>
+            
+            <td>@Html.ActionLink("Otvori", "Index", new { controller = "Uplatnica", id = item.RacunId })</td>
+            <td>@Html.ActionLink("Izmeni", "Edit", new { id = item.RacunId })</td>
+            <td>@Html.ActionLink("Obrisi", "Delete", new { id = item.RacunId })</td>
+            <td>@Html.ActionLink("Deaktiviraj", "ChangeStatus", new { id = item.RacunId })</td>
+        </tr>
+        }
+        else
+        {
+            <tr style="background:red">
+                <td>@item.BrojRacuna</td>
+                <td>@item.NosilacRacuna</td>
+                <td><span>Ne</span></td>
+                <td>
+                    @if (@item.Online)
+                    {
+                        <span>Da</span>
+                    }
+                    else
+                    {
+                        <span>Ne</span>
+                    }
+                </td>           
+                <td>@Html.ActionLink("Otvori", "Index", new { controller = "Uplatnica", id = item.RacunId })</td>
+                <td>@Html.ActionLink("Izmeni", "Edit", new { id = item.RacunId })</td>
+                <td>@Html.ActionLink("Obrisi", "Delete", new { id = item.RacunId })</td>
+                <td>@Html.ActionLink("Aktiviraj", "ChangeStatus", new { id = item.RacunId })</td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+
+<h2>Dodaj novi račun</h2>
+
+@using (Html.BeginForm("Index", "Racun", FormMethod.Post))
+{
+
+    <table>
+
+        <tr>
+            <td> @Html.LabelFor(model => model.NosilacRacuna) </td>
+
+            <td>@Html.TextBoxFor(model => model.NosilacRacuna)</td>
+            <td> @Html.ValidationMessageFor(model => model.NosilacRacuna, "", new { @class = "text-danger"})</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.BrojRacuna)</td>
+
+            <td>@Html.TextBoxFor(model => model.BrojRacuna)</td>
+            <td>@Html.ValidationMessageFor(model => model.BrojRacuna, "",new { @class = "text-danger" })</td>
+
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Aktivan)</td>
+            <td>@Html.CheckBoxFor(model => model.Aktivan)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Online)</td>
+
+            <td> @Html.CheckBoxFor(model => model.Online)</td>
+        </tr>
+
+
+        <tr>
+            <td><input type="submit"  value="Dodaj novi račun" /></td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,64 @@
+﻿@model Banka.Models.Uplatnica
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Izmeni uplatnicu za račun: @ViewBag.BrojRacuna</h2>
+
+<h4>Nosilac računa: @ViewBag.NosilacRacuna</h4>
+
+@using (Html.BeginForm("Edit", "Uplatnica", FormMethod.Post))
+{
+
+    @Html.HiddenFor(model=>model.UplatnicaId)
+    <table>
+        <tr>
+            <td> @Html.LabelFor(model => model.IznosUplate)</td>
+
+            <td> @Html.TextBoxFor(model => model.IznosUplate) </td>
+            <td>@Html.ValidationMessageFor(model => model.IznosUplate, "", new { @class = "text-danger" })</td>
+
+        </tr>
+        <tr>
+            <td> @Html.LabelFor(model => model.DatumPrometa)</td>
+
+            <td>  @Html.TextBoxFor(model => model.DatumPrometa) </td>
+            <td>  @Html.ValidationMessageFor(model => model.DatumPrometa, "", new { @class = "text-danger" })</td>
+
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.SvrhaUplate)</td>
+
+            <td> @Html.TextBoxFor(model => model.SvrhaUplate)</td>
+            <td>  @Html.ValidationMessageFor(model => model.SvrhaUplate, "", new { @class = "text-danger" })</td>
+
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Uplatilac)</td>
+            <td>
+                @Html.TextBoxFor(model => model.Uplatilac)
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.Uplatilac, "", new { @class = "text-danger" })
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Racun)
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.RacunId, ViewBag.Racuni as SelectList)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Hitno)</td>
+
+            <td>@Html.CheckBoxFor(model => model.Hitno)</td>
+
+        </tr>
+
+
+        <tr><td><input type="submit" value="Sačuvaj izmene" /></td></tr>
+    </table>
+}

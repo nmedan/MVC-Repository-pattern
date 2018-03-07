@@ -1,0 +1,132 @@
+﻿@model Banka.Models.Uplatnica
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Rad sa računom: @ViewBag.BrojRacuna</h2>
+
+<h4>Vlasnik računa: @ViewBag.NosilacRacuna</h4>
+
+<h4>Spisak svih transakcija:</h4>
+<table class="table table-bordered">
+    <tr>
+        <td><b>Uplatilac</b></td>
+        <td><b>Iznos uplate</b></td>d
+        <td><b>Datum promenta</b></td>
+        <td><b>Svrha uplate</b></td>
+        <td><b>Hitno</b></td>
+    </tr>
+    
+    @foreach (var item in ViewBag.Uplatnice as IEnumerable<Banka.Models.Uplatnica>)
+    {
+
+        if (item.IznosUplate >= 0)
+        {
+            <tr style="background:lightgreen">
+                <td>@item.Uplatilac</td>
+                <td>@item.IznosUplate</td>
+                <td>@item.DatumPrometa</td>
+                <td>@item.SvrhaUplate</td>
+                <td>
+                    @if (@item.Hitno)
+                    {
+                        <span>Da</span>
+                    }
+                    else
+                    {
+                        <span>Ne</span>
+                    }
+                </td>
+
+                <td>@Html.ActionLink("Izmeni", "Edit", new { id = item.UplatnicaId })</td>
+                <td>@Html.ActionLink("Obrisi", "Delete", new { id = item.UplatnicaId })</td>
+
+            </tr>
+        }
+        else
+        {
+            <tr style="background:red">
+                <td>@item.Uplatilac</td>
+                <td>@item.IznosUplate</td>
+                <td>@item.DatumPrometa</td>
+                <td>@item.SvrhaUplate</td>
+                <td>
+                    @if (@item.Hitno)
+                    {
+                        <span>Da</span>
+                    }
+                    else
+                    {
+                        <span>Ne</span>
+                    }
+                </td>
+              
+
+                <td>@Html.ActionLink("Izmeni", "Edit", new { id = item.UplatnicaId})</td>
+                <td>@Html.ActionLink("Obrisi", "Delete", new { id = item.UplatnicaId})</td>
+
+            </tr>
+        }
+    }
+</table>
+
+<h4>Ukupno: @ViewBag.Suma</h4>
+<hr />
+@if (ViewBag.StatusRacuna == "True") {
+<h2>Izvrši novu transakciju</h2>
+using (Html.BeginForm("Index", "Uplatnica", FormMethod.Post, new { id = ViewBag.RacunId }))
+{
+
+
+    <table>
+        <tr>
+            <td> @Html.LabelFor(model => model.IznosUplate)</td>
+          
+            <td> @Html.TextBoxFor(model => model.IznosUplate) </td>  
+            <td>@Html.ValidationMessageFor(model => model.IznosUplate, "", new { @class = "text-danger" })</td>
+        
+        </tr>
+        <tr>
+           <td> @Html.LabelFor(model => model.DatumPrometa)</td>
+            
+              <td>  @Html.TextBoxFor(model => model.DatumPrometa) </td>
+            <td>  @Html.ValidationMessageFor(model => model.DatumPrometa, "", new { @class = "text-danger" })</td>
+          
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.SvrhaUplate)</td>
+            
+            <td> @Html.TextBoxFor(model => model.SvrhaUplate)</td>
+            <td>  @Html.ValidationMessageFor(model => model.SvrhaUplate, "", new { @class = "text-danger" })</td> 
+          
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Uplatilac)</td>
+            <td>
+                @Html.TextBoxFor(model => model.Uplatilac)
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.Uplatilac, "", new { @class = "text-danger" })
+            </td>
+            
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Hitno)</td>
+            
+              <td>@Html.CheckBoxFor(model => model.Hitno)</td>
+            
+        </tr>
+
+
+        <tr><td><input type="submit" class="btn-block" value="Dodaj novu transakciju" /></td></tr>
+    </table>
+}
+}
+else
+{
+    <h4 class="text-danger">Račun deaktiviran, vršenje transakcija nije moguće!</h4>
+}
+<hr />
+@Html.ActionLink("Povratak na glavnu stranicu", "Index", "Racun")

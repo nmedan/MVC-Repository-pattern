@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Banka.Models.Racun>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista računa</h2>
+
+<table class="table-bordered">
+    <tr>
+        <td><b>Broj racuna</b></td>
+        <td><b>Nosilac racuna</b></td>
+        <td><b>Ukupno </b></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (item.Aktivan)
+        {
+            <tr style="background:green">
+                <td>@item.RacunId</td>
+                <td>@item.NosilacRacuna</td>
+                <td></td>
+                
+                <td><span>Da</span></td>
+                <td>
+                    @if (@item.Online)
+                {
+                    <span>Da</span>
+                }
+                else
+                {
+                    <span>Ne</span>
+                }
+                </td>
+                <td>@Html.ActionLink("Otvori", "Transactions")</td>
+                <td>@Html.ActionLink("Izmeni", "Edit")</td>
+                <td>@Html.ActionLink("Obrisi", "Delete")</td>
+                <td>@Html.ActionLink("Deaktiviraj", "ChangeStatus")</td>
+            </tr>
+        }
+        else
+        {
+            <tr style="background:red">
+                <td>@item.BrojRacuna</td>
+                <td>@item.NosilacRacuna</td>
+                <td></td>
+                
+                <td><span>Ne</span></td>
+                <td>
+                    @if (@item.Online)
+                    {
+                        <span>Da</span>
+                    }
+                    else
+                    {
+                        <span>Ne</span>
+                    }
+                </td>
+                <td>@Html.ActionLink("Otvori", "Transactions")</td>
+                <td>@Html.ActionLink("Izmeni", "Edit")</td>
+                <td>@Html.ActionLink("Obrisi", "Delete")</td>
+                <td>@Html.ActionLink("Aktiviraj", "ChangeStatus")</td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+
+<h2>Dodaj novi racun</h2>
+<form>
+    <table>
+        <tr>
+            <td>Broj racuna</td>
+            <td><input type="text" name="BrojRacuna" /></td>
+        </tr>
+        <tr>
+            <td>Nosilac racuna</td>
+            <td><input type="text" name="NosilacRacuna" /></td>
+        </tr>
+        <tr>
+            <td>Aktivan</td>
+            <td><input type="checkbox" name="Aktivan" /></td>
+        </tr>
+        <tr>
+            <td>Online</td>
+            <td><input type="checkbox" name="Online" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Dodaj novi racun" /></td>
+        </tr>
+    </table>
+</form>

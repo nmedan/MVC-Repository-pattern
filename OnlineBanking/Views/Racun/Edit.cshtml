@@ -1,0 +1,46 @@
+﻿@model Banka.Models.Racun
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Izmena računa za: @ViewBag.NosilacRacuna</h2>
+
+<h4>Broj računa: @ViewBag.BrojRacuna</h4>
+
+@using (Html.BeginForm("Edit", "Racun", FormMethod.Post))
+{
+
+    <table>
+
+        @Html.HiddenFor(model=>model.RacunId)
+        <tr>
+            <td> @Html.LabelFor(model => model.NosilacRacuna) </td>
+
+            <td>@Html.TextBoxFor(model => model.NosilacRacuna)</td>
+            <td> @Html.ValidationMessageFor(model => model.NosilacRacuna, "", new { @class = "text-danger" })</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.BrojRacuna)</td>
+
+            <td>@Html.TextBoxFor(model => model.BrojRacuna)</td>
+            <td>@Html.ValidationMessageFor(model => model.BrojRacuna, "", new { @class = "text-danger" })</td>
+
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Aktivan)</td>
+            <td>@Html.CheckBoxFor(model => model.Aktivan)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Online)</td>
+
+            <td> @Html.CheckBoxFor(model => model.Online)</td>
+        </tr>
+
+
+        <tr>
+            <td><input type="submit" value="Sačuvaj izmene" /></td>
+        </tr>
+    </table>
+}
